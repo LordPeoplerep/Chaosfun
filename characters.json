@@ -1,0 +1,30 @@
+[
+  {
+    "name": "Dennis Nedry",
+    "age": 38,
+    "gender": "Male",
+    "nationality": "American",
+    "role": "Original Clone Template"
+  },
+  {
+    "name": "Ian Malcolm",
+    "age": 45,
+    "gender": "Male",
+    "nationality": "American",
+    "role": "Chaos Theorist; SCR-restricted"
+  },
+  {
+    "name": "Yasmin Toumi",
+    "age": 33,
+    "gender": "Female",
+    "nationality": "Algerian-French",
+    "role": "Biotech Developer"
+  },
+  {
+    "name": "Ram\u00f3n Vega",
+    "age": 36,
+    "gender": "Male",
+    "nationality": "Spanish",
+    "role": "Lab Supervisor"
+  }
+]
