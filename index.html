@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nedry Park Control Dashboard</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #0a0a0a; color: #fff; margin: 0; padding: 0; }
+    header { background: #222; padding: 1em; text-align: center; }
+    nav { background: #111; padding: 0.5em; text-align: center; }
+    nav a { margin: 0 1em; color: #fff; text-decoration: none; font-weight: bold; }
+    nav a:hover { color: #ffcc00; }
+    main { padding: 1em; max-width: 800px; margin: auto; }
+    section { margin-bottom: 2em; }
+    button { background: #ffcc00; color: #000; border: none; padding: 0.5em 1em; border-radius: 5px; cursor: pointer; }
+    button:hover { background: #ffd633; }
+    .output-box { background: #222; padding: 1em; border-left: 4px solid #ffcc00; border-radius: 4px; margin-top: 1em; }
+    ul { list-style: none; padding: 0; }
+    ul li { margin-bottom: 0.5em; }
+    input[type=text] { padding: 0.5em; width: calc(100% - 1.2em); margin-top: 0.5em; border-radius: 4px; border: 1px solid #444; background: #333; color: #fff; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Nedry Park Control Dashboard</h1>
+  </header>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#generator">Family Generator</a>
+    <a href="#chaosfeed">Chaos Feed</a>
+    <a href="#attractions">Attractions</a>
+    <a href="#comments">Guest Comments</a>
+  </nav>
+  <main>
+    <section id="home">
+      <h2>Welcome to Nedry Park</h2>
+      <p>Use the controls below to explore the park's interactive features.</p>
+    </section>
+    <section id="generator">
+      <h2>Family Generator</h2>
+      <button id="gen-btn">Generate Random Family</button>
+      <div id="generator-output" class="output-box">Press the button to generate a family profile.</div>
+    </section>
+    <section id="chaosfeed">
+      <h2>Chaos Event Feed</h2>
+      <button id="chaos-btn">Trigger Chaos Event</button>
+      <div id="chaos-history" class="output-box"></div>
+    </section>
+    <section id="attractions">
+      <h2>Park Attractions</h2>
+      <ul>
+        <li>Rexy's Arena</li>
+        <li>Butterfinger Valley</li>
+        <li>Science Observatory</li>
+        <li>Nedryilophosaur Paddock</li>
+        <li>Chaos Den Lounge</li>
+      </ul>
+    </section>
+    <section id="comments">
+      <h2>Guest Comments</h2>
+      <input type="text" id="guest-comment-input" placeholder="Leave your feedback..." />
+      <button id="comment-btn">Submit</button>
+      <div id="guest-comment-log" class="output-box"></div>
+    </section>
+  </main>
+<script>
+  // Utility
+  function getRandom(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+  // Data pools
+  const firstNames = ['Alex','Sam','Taylor','Jordan','Morgan','Casey','Riley','Quinn','Jamie','Dakota'];
+  const lastNames = ['Walker','Turner','Morgan','Carter','Bailey','Rivera','Campbell','Adams','Bennett','Parker'];
+  const nationalities = ['American','Canadian','Japanese','French','Kenyan','Brazilian','Indian','Egyptian','Australian','Mexican'];
+  const sexualities = ['Straight','Gay','Bi','Lesbian'];
+  const childNames = ['Charlie','Max','Taylor','Jordan','Sam','Riley','Casey','Drew','Jamie','Dakota'];
+  // Family Generator
+  document.getElementById('gen-btn').addEventListener('click', () => {
+    const lastName = getRandom(lastNames);
+    const parents = ['Male','Female'].map(gender => ({
+      name: getRandom(firstNames)+' '+lastName,
+      age: Math.floor(Math.random()*31)+30,
+      gender,
+      nationality: getRandom(nationalities),
+      sexuality: getRandom(sexualities)
+    }));
+    const children = Array.from({length: Math.floor(Math.random()*3)+1}, () => ({
+      name: getRandom(childNames)+' '+lastName,
+      age: Math.floor(Math.random()*13)+5,
+      gender: getRandom(['Male','Female'])
+    }));
+    let html = `<p><strong>Family: ${lastName}</strong></p><ul>`;
+    parents.forEach(p => html+=`<li>${p.name}, ${p.age}yo, ${p.gender}, ${p.nationality}, ${p.sexuality}</li>`);
+    children.forEach(c => html+=`<li>${c.name}, ${c.age}yo, ${c.gender} (Child)</li>`);
+    html += '</ul>';
+    document.getElementById('generator-output').innerHTML = html;
+  });
+  // Chaos Feed
+  const chaosEvents = [];
+  document.getElementById('chaos-btn').addEventListener('click', () => {
+    const cloneNum = Math.floor(Math.random()*1200)+1;
+    const templates = [
+      `Clone #${cloneNum} seduced the SCR sensors.`,
+      `Clone #${cloneNum} tried vault entry.`,
+      `Clone #${cloneNum} rebooted network after butterfinger drop.`,
+      `Clone #${cloneNum} mislabeled vault as freezer causing confusion.`,
+      `Clone #${cloneNum} triggered simulated raptor breach.`
+    ];
+    const evt = getRandom(templates);
+    chaosEvents.unshift({evt, time: new Date().toLocaleTimeString()});
+    document.getElementById('chaos-history').innerHTML = chaosEvents.map(e=>`<p>[${e.time}] ${e.evt}</p>`).join('');
+  });
+  // Guest Comments
+  document.getElementById('comment-btn').addEventListener('click', () => {
+    const inp = document.getElementById('guest-comment-input');
+    if (inp.value.trim()) {
+      const p = document.createElement('p'); p.textContent = `Guest says: ${inp.value}`;
+      document.getElementById('guest-comment-log').appendChild(p);
+      inp.value = '';
+    }
+  });
+</script>
+</body>
+</html>
