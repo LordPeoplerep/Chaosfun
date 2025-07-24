@@ -16,10 +16,6 @@
   <main>
     <section id="home"><h2>Welcome to Nedry Park</h2><p>Use the controls below to explore the park's interactive features.</p></section>
     <section id="generator">
-      <h2>Family Generator</h2>
-      <button id="gen-btn">Generate Random Family</button>
-      <div id="generator-output" class="output-box">Press the button to generate a family profile.</div>
-    </section>
     <section id="chaosfeed">
       <h2>Chaos Event Feed</h2>
       <button id="chaos-btn">Trigger Chaos Event</button>
@@ -41,28 +37,6 @@
     </section>
   </main>
   <script>
-    function getRandom(arr) { return arr[Math.floor(Math.random()*arr.length)]; }
-    const firstNames=['Alex','Sam','Taylor','Jordan','Morgan','Casey','Riley','Quinn','Jamie','Dakota'];
-    const lastNames=['Walker','Turner','Morgan','Carter','Bailey','Rivera','Campbell','Adams','Bennett','Parker'];
-    const nationalities=['American','Canadian','Japanese','French','Kenyan','Brazilian','Indian','Egyptian','Australian','Mexican'];
-    const sexualities=['Straight','Gay','Bi','Lesbian'];
-    const childNames=['Charlie','Max','Taylor','Jordan','Sam','Riley','Casey','Drew','Jamie','Dakota'];
-
-    document.getElementById('gen-btn').onclick = () => {
-      const last = getRandom(lastNames);
-      const parents=['Male','Female'].map(g => ({
-        name: getRandom(firstNames)+' '+last, age:Math.floor(Math.random()*31)+30,
-        gender:g, nationality:getRandom(nationalities), sexuality:getRandom(sexualities)
-      }));
-      const children = Array.from({length:Math.floor(Math.random()*3)+1},()=>{
-        return {name:getRandom(childNames)+' '+last, age:Math.floor(Math.random()*13)+5, gender:getRandom(['Male','Female'])};
-      });
-      let html='<p><strong>Family: '+last+'</strong></p><ul>';
-      parents.forEach(p => html+=`<li>${p.name}, ${p.age}yo, ${p.gender}, ${p.nationality}, ${p.sexuality}</li>`);
-      children.forEach(c => html+=`<li>${c.name}, ${c.age}yo, ${c.gender} (Child)</li>`);
-      html+='</ul>';
-      document.getElementById('generator-output').innerHTML=html;
-    };
 
     const chaosEvents=[];
     document.getElementById('chaos-btn').onclick = () => {
