@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Nedry Park™ - Jurassic Chaos</title>
+  <title>Nedry Park - Jurassic Chaos</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -32,79 +32,86 @@
 </head>
 <body>
 
-  <h1>Welcome to Nedry Park™</h1>
+  <h1>Welcome to Nedry Park</h1>
   <h2>“We spared no expense. Then gave the whole system to Dennis.”</h2>
 
   <div class="box">
     <h3>🎢 Current Attraction</h3>
     <p id="attraction">Loading attraction...</p>
-    <button onclick="changeAttraction()">Change Attraction</button>
+    <button id="changeAttractionBtn">Change Attraction</button>
   </div>
 
   <div class="box">
     <h3>📡 Chaos Feed</h3>
     <ul id="chaosFeed"></ul>
-    <button onclick="generateChaos()">Trigger New Chaos</button>
+    <button id="triggerChaosBtn">Trigger New Chaos</button>
   </div>
 
   <div class="box">
     <h3>🧑‍🤝‍🧑 Guest Reactions</h3>
     <p id="guestReaction">Press below for a guest reaction</p>
-    <button onclick="newReaction()">New Reaction</button>
+    <button id="reactionBtn">New Reaction</button>
   </div>
 
   <script>
-    const attractions = [
-      "Nedryorasus Rex Encounter",
-      "Chaos Den - Malcom's Lounge",
-      "Rexy Feeding Grounds",
-      "Barbasol Vault Tour",
-      "Velociraptor Arena (w/ Owen)",
-      "Science Observatory Buggie",
-      "Blue's Sanctuary",
-      "Butterfingers Café",
-      "Dr. Wu's Secret Lab"
-    ];
+    window.onload = function () {
+      const attractions = [
+        "Nedryorasus Rex Encounter",
+        "Chaos Den - Malcom's Lounge",
+        "Rexy Feeding Grounds",
+        "Barbasol Vault Tour",
+        "Velociraptor Arena (w/ Owen)",
+        "Science Observatory Buggie",
+        "Blue's Sanctuary",
+        "Butterfingers Café",
+        "Dr. Wu's Secret Lab"
+      ];
 
-    const reactions = [
-      "That was intense!",
-      "Why did that dinosaur sound like a man yelling 'Ah ah ah'?",
-      "Malcom is oddly charming.",
-      "Did that T. rex just burp chocolate?",
-      "Best park ever!",
-      "Dodgson? We got Dodgson here!",
-      "I think the clone sneezed on me."
-    ];
+      const reactions = [
+        "That was intense!",
+        "Why did that dinosaur sound like a man yelling 'Ah ah ah'?",
+        "Malcom is oddly charming.",
+        "Did that T. rex just burp chocolate?",
+        "Best park ever!",
+        "Dodgson? We got Dodgson here!",
+        "I think the clone sneezed on me."
+      ];
 
-    const feedItems = [
-      () => `Clone #${Math.floor(Math.random()*9000+1000)} escaped from Lab D`,
-      () => `Dodgson attempted access to Barbasol Vault (Blocked)`,
-      () => `Malcom detected within 20m of Security Control Room`,
-      () => `Code "Seductive Malcom" initiated – SCR compromised`,
-      () => `Clone #${Math.floor(Math.random()*9000+1000)} caught consuming Butterfingers unauthorized`,
-      () => `Dodgson used Disguise #${Math.floor(Math.random()*90 + 1)} (FAILED)`
-    ];
+      const feedItems = [
+        () => `Clone #${Math.floor(Math.random()*9000+1000)} escaped from Lab D`,
+        () => `Dodgson attempted access to Barbasol Vault (Blocked)`,
+        () => `Malcom detected within 20m of Security Control Room`,
+        () => `Code "Seductive Malcom" initiated – SRC compromised`,
+        () => `Clone #${Math.floor(Math.random()*9000+1000)} caught consuming Butterfingers unauthorized`,
+        () => `Dodgson used Disguise #${Math.floor(Math.random()*90 + 1)} (FAILED)`
+      ];
 
-    function changeAttraction() {
-      const random = Math.floor(Math.random() * attractions.length);
-      document.getElementById("attraction").innerText = attractions[random];
-    }
+      function changeAttraction() {
+        const random = Math.floor(Math.random() * attractions.length);
+        document.getElementById("attraction").innerText = attractions[random];
+      }
 
-    function generateChaos() {
-      const random = Math.floor(Math.random() * feedItems.length);
-      const li = document.createElement("li");
-      li.innerText = feedItems[random]();
-      document.getElementById("chaosFeed").prepend(li);
-    }
+      function generateChaos() {
+        const random = Math.floor(Math.random() * feedItems.length);
+        const li = document.createElement("li");
+        li.innerText = feedItems[random]();
+        document.getElementById("chaosFeed").prepend(li);
+      }
 
-    function newReaction() {
-      const random = Math.floor(Math.random() * reactions.length);
-      document.getElementById("guestReaction").innerText = reactions[random];
-    }
+      function newReaction() {
+        const random = Math.floor(Math.random() * reactions.length);
+        document.getElementById("guestReaction").innerText = reactions[random];
+      }
 
-    // Initial setup
-    changeAttraction();
-    for (let i = 0; i < 5; i++) generateChaos();
+      // Hook buttons to events
+      document.getElementById("changeAttractionBtn").onclick = changeAttraction;
+      document.getElementById("triggerChaosBtn").onclick = generateChaos;
+      document.getElementById("reactionBtn").onclick = newReaction;
+
+      // Initial setup
+      changeAttraction();
+      for (let i = 0; i < 5; i++) generateChaos();
+    };
   </script>
 
 </body>
