@@ -1,63 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Nedry Park Control Dashboard</title>
-  <link rel="stylesheet" href="style.css"/>
+  <meta charset="UTF-8">
+  <title>Nedry Park™ - Jurassic Chaos</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: #eee;
+      padding: 20px;
+    }
+    h1, h2 {
+      color: #f0c040;
+    }
+    button {
+      margin: 5px;
+      padding: 10px;
+      background-color: #f0c040;
+      color: #000;
+      border: none;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    .box {
+      border: 1px solid #f0c040;
+      padding: 10px;
+      margin: 15px 0;
+      background-color: #222;
+    }
+  </style>
 </head>
 <body>
-  <header><h1>Nedry Park Control Dashboard</h1></header>
-  <nav>
-    <a href="#home">Home</a><a href="#generator">Family Generator</a>
-    <a href="#chaosfeed">Chaos Feed</a><a href="#attractions">Attractions</a>
-    <a href="#comments">Guest Comments</a>
-  </nav>
-  <main>
-    <section id="home"><h2>Welcome to Nedry Park</h2><p>Use the controls below to explore the park's interactive features.</p></section>
-    <section id="generator">
-    <section id="chaosfeed">
-      <h2>Chaos Event Feed</h2>
-      <button id="chaos-btn">Trigger Chaos Event</button>
-      <div id="chaos-history" class="output-box"></div>
-    </section>
-    <section id="attractions">
-      <h2>Park Attractions</h2>
-      <ul>
-        <li>Rexy's Arena</li><li>Butterfinger Valley</li>
-        <li>Science Observatory</li><li>Nedryilophosaur Paddock</li>
-        <li>Chaos Den Lounge</li>
-      </ul>
-    </section>
-    <section id="comments">
-      <h2>Guest Comments</h2>
-      <input type="text" id="guest-comment-input" placeholder="Leave your feedback..." />
-      <button id="comment-btn">Submit</button>
-      <div id="guest-comment-log" class="output-box"></div>
-    </section>
-  </main>
-  <script>
-const chaosEvents=[];
-    document.getElementById('chaos-btn').onclick = () => {
-      const cloneNum = Math.floor(Math.random()*1200)+1;
-      const type=getRandom(['clone','malcom','dodgson']);
-      let evt;
-      if(type==='clone') evt=`Clone #${cloneNum} rummaged the Barbasol Vault.`;
-      else if(type==='malcom') evt=`Malcom spotted within 20m of SCR – seduction anomaly.`;
-      else evt=`Dodgson clone #${cloneNum} attempted Barbasol Vault intrusion.`;
-      chaosEvents.unshift({evt,time:new Date().toLocaleTimeString()});
-      document.getElementById('chaos-history').innerHTML=chaosEvents.map(e=>`<p>[${e.time}] ${e.evt}</p>`).join('');
-    };
 
-    document.getElementById('comment-btn').onclick = () => {
-      const inp=document.getElementById('guest-comment-input');
-      if(inp.value.trim()){
-        const p=document.createElement('p');
-        p.textContent='Guest says: '+inp.value;
-        document.getElementById('guest-comment-log').appendChild(p);
-        inp.value='';
-      }
-    };
+  <h1>Welcome to Nedry Park™</h1>
+  <h2>“We spared no expense. Then gave the whole system to Dennis.”</h2>
+
+  <div class="box">
+    <h3>🎢 Current Attraction</h3>
+    <p id="attraction">Loading attraction...</p>
+    <button onclick="changeAttraction()">Change Attraction</button>
+  </div>
+
+  <div class="box">
+    <h3>📡 Chaos Feed</h3>
+    <ul id="chaosFeed"></ul>
+    <button onclick="generateChaos()">Trigger New Chaos</button>
+  </div>
+
+  <div class="box">
+    <h3>🧑‍🤝‍🧑 Guest Reactions</h3>
+    <p id="guestReaction">Press below for a guest reaction</p>
+    <button onclick="newReaction()">New Reaction</button>
+  </div>
+
+  <script>
+    const attractions = [
+      "Nedryorasus Rex Encounter",
+      "Chaos Den - Malcom's Lounge",
+      "Rexy Feeding Grounds",
+      "Barbasol Vault Tour",
+      "Velociraptor Arena (w/ Owen)",
+      "Science Observatory Buggie",
+      "Blue's Sanctuary",
+      "Butterfingers Café",
+      "Dr. Wu's Secret Lab"
+    ];
+
+    const reactions = [
+      "That was intense!",
+      "Why did that dinosaur sound like a man yelling 'Ah ah ah'?",
+      "Malcom is oddly charming.",
+      "Did that T. rex just burp chocolate?",
+      "Best park ever!",
+      "Dodgson? We got Dodgson here!",
+      "I think the clone sneezed on me."
+    ];
+
+    const feedItems = [
+      () => `Clone #${Math.floor(Math.random()*9000+1000)} escaped from Lab D`,
+      () => `Dodgson attempted access to Barbasol Vault (Blocked)`,
+      () => `Malcom detected within 20m of Security Control Room`,
+      () => `Code "Seductive Malcom" initiated – SCR compromised`,
+      () => `Clone #${Math.floor(Math.random()*9000+1000)} caught consuming Butterfingers unauthorized`,
+      () => `Dodgson used Disguise #${Math.floor(Math.random()*90 + 1)} (FAILED)`
+    ];
+
+    function changeAttraction() {
+      const random = Math.floor(Math.random() * attractions.length);
+      document.getElementById("attraction").innerText = attractions[random];
+    }
+
+    function generateChaos() {
+      const random = Math.floor(Math.random() * feedItems.length);
+      const li = document.createElement("li");
+      li.innerText = feedItems[random]();
+      document.getElementById("chaosFeed").prepend(li);
+    }
+
+    function newReaction() {
+      const random = Math.floor(Math.random() * reactions.length);
+      document.getElementById("guestReaction").innerText = reactions[random];
+    }
+
+    // Initial setup
+    changeAttraction();
+    for (let i = 0; i < 5; i++) generateChaos();
   </script>
+
 </body>
 </html>
